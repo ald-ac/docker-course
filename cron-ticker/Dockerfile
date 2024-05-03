@@ -10,7 +10,16 @@ COPY ./package.json ./
 RUN npm install
 
 # cp files to app
-COPY ./app.js ./
+COPY . .
+
+# Testing
+RUN npm run test
+
+# Remove dev/test dependencies
+RUN rm -rf tests && rm -rf node_modules
+
+# Production dependencies
+RUN npm install --prod
 
 # Command at run image
 CMD ["node", "app.js"]
